@@ -1,0 +1,12 @@
+﻿#ifndef Z21LANPROTOCOL_GLOBAL_H
+#define Z21LANPROTOCOL_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(Z21LANPROTOCOL_LIBRARY)
+#  define Z21_EXPORT Q_DECL_EXPORT
+#else
+#  define Z21_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // Z21LANPROTOCOL_GLOBAL_H
