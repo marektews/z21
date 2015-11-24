@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    Z21LanProtocol
+    Z21LanProtocol \
+    Tests/Test1
