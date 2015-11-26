@@ -20,7 +20,8 @@ SOURCES += Z21LanProtocol.cpp \
     Z21SystemState.cpp \
     Z21Current.cpp \
     Z21Voltage.cpp \
-    Z21Temperature.cpp
+    Z21Temperature.cpp \
+    Z21CentralState.cpp
 
 HEADERS += Z21LanProtocol.h \
     global.h \
@@ -29,7 +30,8 @@ HEADERS += Z21LanProtocol.h \
     Z21SystemState.h \
     Z21Current.h \
     Z21Voltage.h \
-    Z21Temperature.h
+    Z21Temperature.h \
+    Z21CentralState.h
 
 unix {
     target.path = /usr/lib

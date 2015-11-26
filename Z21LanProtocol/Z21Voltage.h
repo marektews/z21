@@ -14,7 +14,7 @@ public:
     QString unit() const;
     QString toString(bool withUnit = false) const;
 
-    Z21Voltage& operator = (quint16 v);
+    Z21Voltage operator =(quint16 v);
 
 private:
     quint16 val = 0;

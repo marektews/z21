@@ -20,7 +20,7 @@ QString Z21Temperature::toString(bool withUnit, bool unitLongName) const
     return s;
 }
 
-Z21Temperature &Z21Temperature::operator =(quint16 v)
+Z21Temperature Z21Temperature::operator =(quint16 v)
 {
     val = v;
     return *this;

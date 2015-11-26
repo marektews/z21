@@ -20,7 +20,7 @@ QString Z21Voltage::toString(bool withUnit) const
     return s;
 }
 
-Z21Voltage &Z21Voltage::operator =(quint16 v)
+Z21Voltage Z21Voltage::operator =(quint16 v)
 {
     val = v;
     return *this;

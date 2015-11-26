@@ -54,6 +54,6 @@ void Dialog::SystemState(const Z21SystemState &ss)
     ui->temperature->setText(ss.Temperature.toString());
     ui->supplyVoltage->setText(ss.SupplyVoltage.toString());
     ui->vccVoltage->setText(ss.VCCVoltage.toString());
-    ui->centralState->setText(QVariant(ss.CentralState).toString());
-    ui->centralStateEx->setText(QVariant(ss.CentralStateEx).toString());
+    //ui->centralState->setText(QVariant(ss.CentralState).toString());
+    //ui->centralStateEx->setText(QVariant(ss.CentralStateEx).toString());
 }

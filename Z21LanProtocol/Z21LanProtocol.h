@@ -60,9 +60,6 @@ signals:
 private slots:
     void on_receiver_serialnumber(quint32 serial);
     void on_receiver_broadcastFlags(quint32 flags);
-    void on_receiver_systemState(const Z21SystemState& systeState);
-
-    void on_receiver_xbus_version(quint8 version, quint8 centralID);
 };
 
 #endif // Z21LANPROTOCOL_H

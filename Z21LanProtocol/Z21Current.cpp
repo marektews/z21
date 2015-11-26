@@ -20,7 +20,7 @@ QString Z21Current::toString(bool withUnit) const
     return s;
 }
 
-Z21Current &Z21Current::operator =(quint16 v)
+Z21Current Z21Current::operator =(quint16 v)
 {
     val = v;
     return *this;

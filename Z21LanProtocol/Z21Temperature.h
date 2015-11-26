@@ -14,7 +14,7 @@ public:
     QString unit(bool longName = false) const;
     QString toString(bool withUnit = false, bool unitLongName = false) const;
 
-    Z21Temperature& operator = (quint16 v);
+    Z21Temperature operator =(quint16 v);
 
 private:
     quint16 val = 0;

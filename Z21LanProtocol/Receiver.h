@@ -6,16 +6,17 @@
 #include <QUdpSocket>
 #include "Z21SystemState.h"
 
+class Z21LanProtocol;
+
 class Receiver : public QObject
 {
     Q_OBJECT
 public:
-    explicit Receiver(QObject *parent = 0);
+    explicit Receiver(Z21LanProtocol* z21, QObject *parent = 0);
 
 signals:
     void lan_SerialNumber(quint32 serial);
     void lan_BroadcastFlags(quint32 flags);
-    void lan_SystemState(const Z21SystemState& systemState);
 
     void xbus_Version(quint8 version, quint8 centralID);
 
@@ -26,7 +27,8 @@ private slots:
     void ReadPendingDatagrams();
 
 private:
-    QUdpSocket* socket;
+    QUdpSocket* socket = nullptr;
+    Z21LanProtocol* z21 = nullptr;
 
 private:
     quint8 crc;

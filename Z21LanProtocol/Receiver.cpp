@@ -1,7 +1,8 @@
 ﻿#include <QDataStream>
+#include "Z21LanProtocol.h"
 #include "Receiver.h"
 
-Receiver::Receiver(QObject *parent) : QObject(parent)
+Receiver::Receiver(Z21LanProtocol *z21, QObject *parent) : QObject(parent), z21(z21)
 {}
 
 /**
@@ -68,17 +69,8 @@ void Receiver::ReadPendingDatagrams()
 
             case 0x84:  // LAN_SYSTEMSTATE_DATACHANGED
                 {
-                    Z21SystemState ss; quint16 v;
-                    stream >> v; ss.MainCurrent = v;
-                    stream >> v; ss.ProgCurrent = v;
-                    stream >> v; ss.FilteredMainCurrent = v;
-                    stream >> v; ss.Temperature = v;
-                    stream >> v; ss.SupplyVoltage = v;
-                    stream >> v; ss.VCCVoltage = v;
-                    stream >> ss.CentralState;
-                    stream >> ss.CentralStateEx;
-                    stream >> ss.reserved;
-                    emit lan_SystemState(ss);
+                    Z21SystemState ss(stream);
+                    emit z21->lan_SystemState(ss);
                     break;
                 }
 
@@ -99,7 +91,7 @@ void Receiver::ReadPendingDatagrams()
                             }
                             stream >> crc;
                             if(CheckCRC(crc))
-                                emit xbus_Version(db[1], db[2]);
+                                emit z21->xbus_Version(db[1], db[2]);
                             break;
                         }
                     }

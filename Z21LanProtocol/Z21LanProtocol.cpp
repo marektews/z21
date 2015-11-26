@@ -33,7 +33,7 @@ bool Z21LanProtocol::Configure(const QHostAddress &address, quint16 port)
     this->port = port;
 
     // create receiver
-    Receiver* worker = new Receiver;
+    Receiver* worker = new Receiver(this);
     if(worker == nullptr) return false;
     worker->moveToThread(&receiver);
     connect(&receiver, &QThread::finished, worker, &QObject::deleteLater);
@@ -41,9 +41,6 @@ bool Z21LanProtocol::Configure(const QHostAddress &address, quint16 port)
 
     connect(worker, &Receiver::lan_SerialNumber, this, &Z21LanProtocol::on_receiver_serialnumber);
     connect(worker, &Receiver::lan_BroadcastFlags, this, &Z21LanProtocol::on_receiver_broadcastFlags);
-    connect(worker, &Receiver::lan_SystemState, this, &Z21LanProtocol::on_receiver_systemState);
-
-    connect(worker, &Receiver::xbus_Version, this, &Z21LanProtocol::on_receiver_xbus_version);
 
     receiver.start();
     emit startReceiver(QHostAddress::Any, port);
@@ -147,23 +144,4 @@ void Z21LanProtocol::on_receiver_broadcastFlags(quint32 flags)
 {
     broadcastFlags = flags;
     emit lan_BroadcastFlags(flags);
-}
-
-/**
- * @brief Z21LanProtocol::on_receiver_systemState
- * @param systeState
- */
-void Z21LanProtocol::on_receiver_systemState(const Z21SystemState &systeState)
-{
-    emit lan_SystemState(systeState);
-}
-
-/**
- * @brief Z21LanProtocol::on_receiver_xbus_version
- * @param XBusVersion
- * @param CentralID
- */
-void Z21LanProtocol::on_receiver_xbus_version(quint8 version, quint8 centralID)
-{
-    emit xbus_Version(version, centralID);
 }
