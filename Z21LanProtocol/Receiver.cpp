@@ -68,13 +68,13 @@ void Receiver::ReadPendingDatagrams()
 
             case 0x84:  // LAN_SYSTEMSTATE_DATACHANGED
                 {
-                    Z21SystemState ss;
-                    stream >> ss.MainCurrent;
-                    stream >> ss.ProgCurrent;
-                    stream >> ss.FilteredMainCurrent;
-                    stream >> ss.Temperature;
-                    stream >> ss.SupplyVoltage;
-                    stream >> ss.VCCVoltage;
+                    Z21SystemState ss; quint16 v;
+                    stream >> v; ss.MainCurrent = v;
+                    stream >> v; ss.ProgCurrent = v;
+                    stream >> v; ss.FilteredMainCurrent = v;
+                    stream >> v; ss.Temperature = v;
+                    stream >> v; ss.SupplyVoltage = v;
+                    stream >> v; ss.VCCVoltage = v;
                     stream >> ss.CentralState;
                     stream >> ss.CentralStateEx;
                     stream >> ss.reserved;

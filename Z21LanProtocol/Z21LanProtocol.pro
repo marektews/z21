@@ -17,13 +17,19 @@ DEFINES += Z21LANPROTOCOL_LIBRARY
 SOURCES += Z21LanProtocol.cpp \
     Receiver.cpp \
     TransmitterTask.cpp \
-    Z21SystemState.cpp
+    Z21SystemState.cpp \
+    Z21Current.cpp \
+    Z21Voltage.cpp \
+    Z21Temperature.cpp
 
 HEADERS += Z21LanProtocol.h \
     global.h \
     Receiver.h \
     TransmitterTask.h \
-    Z21SystemState.h
+    Z21SystemState.h \
+    Z21Current.h \
+    Z21Voltage.h \
+    Z21Temperature.h
 
 unix {
     target.path = /usr/lib

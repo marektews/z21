@@ -27,8 +27,8 @@ Dialog::~Dialog()
 void Dialog::on_pushButton_clicked()
 {
     z21.Configure(QHostAddress(ui->host->text()), ui->port->text().toInt());
-    z21.GetSerialNumber();
     z21.SetBroadcastFlags(0x100, 0x100);
+    z21.GetSerialNumber();
 }
 
 /**
@@ -48,12 +48,12 @@ void Dialog::SerialNumber(quint32 serial, const QString &str)
  */
 void Dialog::SystemState(const Z21SystemState &ss)
 {
-    ui->mainCurrent->setText(QVariant(ss.MainCurrent).toString());
-    ui->progCurrent->setText(QVariant(ss.ProgCurrent).toString());
-    ui->filteredMainCurrent->setText(QVariant(ss.FilteredMainCurrent).toString());
-    ui->temperature->setText(QVariant(ss.Temperature).toString());
-    ui->supplyVoltage->setText(QVariant(ss.SupplyVoltage).toString());
-    ui->vccVoltage->setText(QVariant(ss.VCCVoltage).toString());
+    ui->mainCurrent->setText(ss.MainCurrent.toString());
+    ui->progCurrent->setText(ss.ProgCurrent.toString());
+    ui->filteredMainCurrent->setText(ss.FilteredMainCurrent.toString());
+    ui->temperature->setText(ss.Temperature.toString());
+    ui->supplyVoltage->setText(ss.SupplyVoltage.toString());
+    ui->vccVoltage->setText(ss.VCCVoltage.toString());
     ui->centralState->setText(QVariant(ss.CentralState).toString());
     ui->centralStateEx->setText(QVariant(ss.CentralStateEx).toString());
 }
