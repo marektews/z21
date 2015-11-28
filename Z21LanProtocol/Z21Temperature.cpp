@@ -1,4 +1,5 @@
 ﻿#include "Z21Temperature.h"
+#include <QVariant>
 
 Z21Temperature::Z21Temperature(quint16 v) : val(v)
 {}
@@ -15,7 +16,7 @@ QString Z21Temperature::unit(bool longName) const
 
 QString Z21Temperature::toString(bool withUnit, bool unitLongName) const
 {
-    QString s(val);
+    QString s = QVariant(val).toString();
     if(withUnit) { s += ' '; s += unit(unitLongName); }
     return s;
 }

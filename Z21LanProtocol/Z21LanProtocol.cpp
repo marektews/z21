@@ -53,10 +53,10 @@ bool Z21LanProtocol::Configure(const QHostAddress &address, quint16 port)
 }
 
 /**
- * @brief Z21LanProtocol::GetSerialNumber
+ * @brief Z21LanProtocol::SendGetSerialNumber
  * @return Look return value of AddRequest routine
  */
-bool Z21LanProtocol::GetSerialNumber()
+bool Z21LanProtocol::SendGetSerialNumber()
 {
     QByteArray arr;
     QDataStream stream(&arr, QIODevice::WriteOnly);

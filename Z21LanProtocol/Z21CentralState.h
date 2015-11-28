@@ -53,6 +53,8 @@ public:
      */
     bool IsShortCircuitInternal() const;
 
+    QString toString() const;
+
 private:
     quint16 bitmask = 0;
 };

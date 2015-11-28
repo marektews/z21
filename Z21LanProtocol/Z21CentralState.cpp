@@ -75,3 +75,21 @@ bool Z21CentralState::IsShortCircuitExternal() const { return bitmask & 0x0400 ?
  */
 bool Z21CentralState::IsShortCircuitInternal() const { return bitmask & 0x0800 ? true : false; }
 
+/**
+ * @brief Z21CentralState::toString
+ * @return
+ */
+QString Z21CentralState::toString() const
+{
+    QString s;
+    if(IsEmergencyStop()) s += "EmergencyStop ";
+    if(IsTrackVoltageOff()) s += "TrackVoltageOff ";
+    if(IsShortCircuit()) s += "ShortCircuit ";
+    if(IsProgrammingModeActive()) s += "ProgrammingModeActive ";
+    if(IsHighTemperature()) s += "HighTemperature ";
+    if(IsPowerLost()) s += "PowerLost ";
+    if(IsShortCircuitExternal()) s += "ShortCircuitExternal ";
+    if(IsShortCircuitInternal()) s += "ShortCircuitInternal ";
+    return s.trimmed();
+}
+

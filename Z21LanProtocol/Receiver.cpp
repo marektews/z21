@@ -41,7 +41,7 @@ void Receiver::ReadPendingDatagrams()
         {
             stream >> length;
             stream >> header;
-            qDebug() << "Z21: lenght:" << length << "header:" << header;
+            qDebug() << "Z21: lenght:" << length << "header id:" << header;
             switch(header)
             {
             default:

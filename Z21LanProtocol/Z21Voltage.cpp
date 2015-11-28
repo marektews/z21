@@ -1,4 +1,5 @@
 ﻿#include "Z21Voltage.h"
+#include <QVariant>
 
 Z21Voltage::Z21Voltage(quint16 v) : val(v)
 {}
@@ -15,7 +16,7 @@ QString Z21Voltage::unit() const
 
 QString Z21Voltage::toString(bool withUnit) const
 {
-    QString s(val);
+    QString s = QVariant(val).toString();
     if(withUnit) { s += ' '; s += unit(); }
     return s;
 }

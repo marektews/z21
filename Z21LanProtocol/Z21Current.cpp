@@ -1,4 +1,5 @@
 ﻿#include "Z21Current.h"
+#include <QVariant>
 
 Z21Current::Z21Current(quint16 v) : val(v)
 {}
@@ -15,7 +16,7 @@ QString Z21Current::unit() const
 
 QString Z21Current::toString(bool withUnit) const
 {
-    QString s(val);
+    QString s = QVariant(val).toString();
     if(withUnit) { s += ' '; s += unit(); }
     return s;
 }
