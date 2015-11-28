@@ -21,6 +21,10 @@ private slots:
 
     void SerialNumber(quint32 serial, const QString& str);
     void SystemState(const Z21SystemState& ss);
+    void HardwareInfo(quint32 hardwareType, quint32 firmwareVersion);
+
+    void XBus_Version(quint8 version, quint8 centralID);
+    void XBus_FirmwareVersion(quint8 msb, quint8 lsb, const QString& fv);
 
 private:
     Ui::Dialog *ui;
