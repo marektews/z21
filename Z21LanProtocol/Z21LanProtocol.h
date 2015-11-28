@@ -27,50 +27,95 @@ public:
 // SYSTEM, STATUS, VERSION
 public:
     /**
-     * @brief GetSerialNumber Read serial number
+     * @brief Send_GetSerialNumber Read serial number
      * Sending request to z21. This routine is non-blocking.
      * The lan_SerialNumber signal is broadcasting after receiving the response from z21.
      * @return true if success
      */
-    bool SendGetSerialNumber();                 // LAN_GET_SERIAL_NUMBER request
+    bool Send_GetSerialNumber();                                // LAN_GET_SERIAL_NUMBER request
     /**
-     * @brief Logoff
+     * @brief Send_Logoff
      * Sending request to z21. This routine is non-blocking.
      * After that Z21 no longer sends any response.
      * @return true if success
      */
-    bool Logoff();                          // LAN_LOGOFF request
+    bool Send_Logoff();                                         // LAN_LOGOFF request
     /**
-     * @brief GetBroadcastFlags
+     * @brief Send_GetBroadcastFlags
      * Sending request to z21. This routine is non-blocking.
      * The lan_BroadcastFlags signal is broadcasting after receiving the response from z21.
      * @return true if success
      */
-    bool GetBroadcastFlags();               // LAN_GET_BROADCASTFLAGS request
+    bool Send_GetBroadcastFlags();                              // LAN_GET_BROADCASTFLAGS request
     /**
-     * @brief SetBroadcastFlags
+     * @brief Send_SetBroadcastFlags
      * Sending request to z21. This routine is non-blocking.
      * @param flags
      * @param mask
      * @return true if success
      */
-    bool SetBroadcastFlags(quint32 flags, quint32 mask);  // LAN_SET_BROADCASTFLAGS request
+    bool Send_SetBroadcastFlags(quint32 flags, quint32 mask);   // LAN_SET_BROADCASTFLAGS request
+    /**
+     * @brief Send_GetSystemStateData
+     * @return true if success
+     */
+    bool Send_GetSystemStateData();                             // LAN_SYSTEMSTATE_GETDATA request
+    /**
+     * @brief Send_GetHardwareInfo
+     * @return true if success
+     */
+    bool Send_GetHardwareInfo();                                // LAN_GET_HWINFO
 
 signals:
     void lan_SerialNumber(quint32 serial, const QString& str);  // LAN_GET_SERIAL_NUMBER responce
     void lan_BroadcastFlags(quint32 flags);                     // LAN_GET_BROADCASTFLAGS responce
     void lan_SystemState(const Z21SystemState& systemState);    // LAN_SYSTEMSTATE_DATACHANGED broadcast message
+    void lan_HardwareInfo(quint32 hardwareType, quint32 firmwareVersion);
 
 // X-BUS
 public:
     /**
-     * @brief XBus_GetVersion
+     * @brief Send_XBus_GetVersion
      * @return true if success
      */
-    bool XBus_GetVersion();          // LAN_X_GET_VERSION request
+    bool Send_XBus_GetVersion();                                // LAN_X_GET_VERSION request
+    /**
+     * @brief Send_XBus_GetStatus
+     * @return true if success
+     */
+    bool Send_XBus_GetStatus();                                 // LAN_X_GET_STATUS request
+    /**
+     * @brief Send_XBus_SetTrackPowerOff
+     * @return true if success
+     */
+    bool Send_XBus_SetTrackPowerOff();                          // LAN_X_SET_TRACK_POWER_OFF request
+    /**
+     * @brief Send_XBus_SetTrackPowerOn
+     * @return true if success
+     */
+    bool Send_XBus_SetTrackPowerOn();                           // LAN_X_SET_TRACK_POWER_ON request
+    /**
+     * @brief Send_XBus_SetStop
+     * With this command the emergency stop is activated, the locomotives are stopped but the track power remains switched on.
+     * @return true if success
+     */
+    bool Send_XBus_SetStop();                                   // LAN_X_SET_STOP
+    /**
+     * @brief Send_XBus_GetFirmwareVersion
+     * With this command, the firmware version of the Z21 can be read.
+     * @return true if success
+     */
+    bool Send_XBus_GetFirmwareVersion();                        // LAN_X_GET_FIRMWARE_VERSION
 
 signals:
-    void xbus_Version(quint8 version, quint8 centralID);      // LAN_X_GET_VERSION responce
+    void xbus_Version(quint8 version, quint8 centralID);        // LAN_X_GET_VERSION responce
+    void xbus_BcTrackPower(bool off);                           // LAN_X_BC_TRACK_POWER_OFF and LAN_X_BC_TRACK_POWER_ON responces
+    void xbus_BcProgrammingMode();                              // LAN_X_BC_PROGRAMMING_MODE responce
+    void xbus_BcTrackShortCircuit();                            // LAN_X_BC_TRACK_SHORT_CIRCUIT responce
+    void xbus_BcStopped();                                      // LAN_X_BC_STOPPED responce
+    void xbus_UnknownCommand();                                 // LAN_X_UNKNOWN_COMMAND responce
+    void xbus_StatusChanged(const Z21CentralState& state);      // LAN_X_STATUS_CHANGED responce
+    void xbus_FirmwareVersion(quint8 msb, quint8 lsb, const QString& fv);
 
 // LocoNet
 public:
