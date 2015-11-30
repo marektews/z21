@@ -5,6 +5,7 @@
 #include <QHostAddress>
 #include <QUdpSocket>
 #include "Z21SystemState.h"
+#include "Z21Crc.h"
 
 class Z21LanProtocol;
 
@@ -31,9 +32,7 @@ private:
     Z21LanProtocol* z21 = nullptr;
 
 private:
-    quint8 crc;
-    void CRC(quint8 v, bool start = false);
-    bool CheckCRC(quint8 crc);
+    Z21Crc CRC;
 };
 
 #endif // RECEIVER_H

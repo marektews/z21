@@ -21,7 +21,13 @@ SOURCES += Z21LanProtocol.cpp \
     Z21Current.cpp \
     Z21Voltage.cpp \
     Z21Temperature.cpp \
-    Z21CentralState.cpp
+    Z21CentralState.cpp \
+    Z21Crc.cpp \
+    Z21LocoInfo.cpp \
+    Z21LocoAddress.cpp \
+    Z21Direction.cpp \
+    Z21Functions.cpp \
+    Z21Speed.cpp
 
 HEADERS += Z21LanProtocol.h \
     global.h \
@@ -31,7 +37,13 @@ HEADERS += Z21LanProtocol.h \
     Z21Current.h \
     Z21Voltage.h \
     Z21Temperature.h \
-    Z21CentralState.h
+    Z21CentralState.h \
+    Z21Crc.h \
+    Z21LocoInfo.h \
+    Z21LocoAddress.h \
+    Z21Direction.h \
+    Z21Functions.h \
+    Z21Speed.h
 
 unix {
     target.path = /usr/lib

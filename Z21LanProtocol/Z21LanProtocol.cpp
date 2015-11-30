@@ -214,6 +214,29 @@ bool Z21LanProtocol::Send_XBus_GetFirmwareVersion()
 }
 
 /**
+ * @brief Z21LanProtocol::Send_XBus_GetLocoInfo
+ * @param locoAddress
+ * @return
+ */
+bool Z21LanProtocol::Send_XBus_GetLocoInfo(const Z21LocoAddress& la)
+{
+    QByteArray arr;
+    QDataStream stream(&arr, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream << (quint16)0x07 << (quint16)0x40;
+
+    Z21Crc CRC;
+    stream << (quint8)0xE3; CRC.Calculate(0xE3, true);      //X-Header
+    stream << (quint8)0xF0; CRC.Calculate(0xF0);            // DB0
+
+    stream << la.MSB(); CRC.Calculate(la.MSB());
+    stream << la.LSB(); CRC.Calculate(la.LSB());
+
+    stream << CRC.Value();
+    return AddRequest(arr);
+}
+
+/**
  * @brief Z21LanProtocol::AddRequest
  * @param data Data to be send to the Z21 central
  * @return Always true

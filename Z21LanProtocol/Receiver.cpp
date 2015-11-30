@@ -87,16 +87,16 @@ void Receiver::ReadPendingDatagrams()
                     quint8 xHdr;
                     stream >> xHdr;
                     qDebug() << "X-Bus" << xHdr;
-                    CRC(xHdr, true);
+                    CRC.Calculate(xHdr, true);
                     switch(xHdr)
                     {
                     case 0x61:  // LAN_X_BC_TRACK_POWER_OFF, LAN_X_BC_TRACK_POWER_ON, LAN_X_BC_PROGRAMMING_MODE, LAN_X_BC_TRACK_SHORT_CIRCUIT, LAN_X_UNKNOWN_COMMAND
                         {
                             quint8 db0, crc;
                             stream >> db0;
-                            CRC(db0);
+                            CRC.Calculate(db0);
                             stream >> crc;
-                            if(CheckCRC(crc))
+                            if(CRC.Check(crc))
                             {
                                 switch(db0)
                                 {
@@ -116,10 +116,10 @@ void Receiver::ReadPendingDatagrams()
                             for(int i=0; i<2; ++i)
                             {
                                 stream >> db[i];
-                                CRC(db[i]);
+                                CRC.Calculate(db[i]);
                             }
                             stream >> crc;
-                            if(CheckCRC(crc))
+                            if(CRC.Check(crc))
                                 emit z21->xbus_StatusChanged(Z21CentralState(db[1]));
                             break;
                         }
@@ -130,10 +130,10 @@ void Receiver::ReadPendingDatagrams()
                             for(int i=0; i<3; ++i)
                             {
                                 stream >> db[i];
-                                CRC(db[i]);
+                                CRC.Calculate(db[i]);
                             }
                             stream >> crc;
-                            if(CheckCRC(crc))
+                            if(CRC.Check(crc))
                                 emit z21->xbus_Version(db[1], db[2]);
                             break;
                         }
@@ -142,10 +142,28 @@ void Receiver::ReadPendingDatagrams()
                         {
                             quint8 db0, crc;
                             stream >> db0;
-                            CRC(db0);
+                            CRC.Calculate(db0);
                             stream >> crc;
-                            if(CheckCRC(crc))
+                            if(CRC.Check(crc))
                                 emit z21->xbus_BcStopped(); break;
+                            break;
+                        }
+
+                    case 0xEF:  // LAN_X_LOCO_INFO
+                        {
+                            Z21LocoInfo li(stream, CRC);
+                            while(!stream.atEnd())
+                            {
+                                quint8 v;
+                                stream >> v;
+                                if(stream.atEnd())
+                                {
+                                    if(CRC.Check(v))
+                                        emit z21->xbus_LocoInfo(li);
+                                }
+                                else
+                                    CRC.Calculate(v);
+                            }
                             break;
                         }
 
@@ -155,10 +173,10 @@ void Receiver::ReadPendingDatagrams()
                             for(int i=0; i<3; ++i)
                             {
                                 stream >> db[i];
-                                CRC(db[i]);
+                                CRC.Calculate(db[i]);
                             }
                             stream >> crc;
-                            if(CheckCRC(crc))
+                            if(CRC.Check(crc))
                             {
                                 QString fv;
                                 fv.sprintf("%x.%x", db[1], db[2]);
@@ -172,27 +190,3 @@ void Receiver::ReadPendingDatagrams()
         }
     }
 }
-
-/**
- * @brief Receiver::CRC
- * @param v
- * @param start
- */
-void Receiver::CRC(quint8 v, bool start)
-{
-    if(start)
-        crc = v;
-    else
-        crc ^= v;
-}
-
-/**
- * @brief Receiver::CheckCRC
- * @param crc
- * @return
- */
-bool Receiver::CheckCRC(quint8 crc)
-{
-    return this->crc == crc;
-}
-

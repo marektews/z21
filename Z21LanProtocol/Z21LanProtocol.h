@@ -7,6 +7,7 @@
 #include <QThreadPool>
 #include "global.h"
 #include "Z21SystemState.h"
+#include "Z21LocoInfo.h"
 
 class Z21_EXPORT Z21LanProtocol : public QObject
 {
@@ -67,8 +68,8 @@ public:
     bool Send_GetHardwareInfo();                                // LAN_GET_HWINFO
 
 signals:
-    void lan_SerialNumber(quint32 serial, const QString& str);  // LAN_GET_SERIAL_NUMBER responce
-    void lan_BroadcastFlags(quint32 flags);                     // LAN_GET_BROADCASTFLAGS responce
+    void lan_SerialNumber(quint32 serial, const QString& str);  // LAN_GET_SERIAL_NUMBER response
+    void lan_BroadcastFlags(quint32 flags);                     // LAN_GET_BROADCASTFLAGS response
     void lan_SystemState(const Z21SystemState& systemState);    // LAN_SYSTEMSTATE_DATACHANGED broadcast message
     void lan_HardwareInfo(quint32 hardwareType, quint32 firmwareVersion);
 
@@ -107,15 +108,29 @@ public:
      */
     bool Send_XBus_GetFirmwareVersion();                        // LAN_X_GET_FIRMWARE_VERSION
 
+    /** DRIVE **/
+
+    /**
+     * @brief Send_XBus_GetLocoInfo
+     * @param locoAddress
+     * @return true if success
+     */
+    bool Send_XBus_GetLocoInfo(const Z21LocoAddress& la);            // LAN_X_GET_LOCO_INFO
+
+    bool Send_XBus_SetLocoDrive(const Z21LocoInfo& li);
+
+    bool Send_XBus_SetLocoFunction();
+
 signals:
-    void xbus_Version(quint8 version, quint8 centralID);        // LAN_X_GET_VERSION responce
-    void xbus_BcTrackPower(bool off);                           // LAN_X_BC_TRACK_POWER_OFF and LAN_X_BC_TRACK_POWER_ON responces
-    void xbus_BcProgrammingMode();                              // LAN_X_BC_PROGRAMMING_MODE responce
-    void xbus_BcTrackShortCircuit();                            // LAN_X_BC_TRACK_SHORT_CIRCUIT responce
-    void xbus_BcStopped();                                      // LAN_X_BC_STOPPED responce
-    void xbus_UnknownCommand();                                 // LAN_X_UNKNOWN_COMMAND responce
-    void xbus_StatusChanged(const Z21CentralState& state);      // LAN_X_STATUS_CHANGED responce
-    void xbus_FirmwareVersion(quint8 msb, quint8 lsb, const QString& fv);
+    void xbus_Version(quint8 version, quint8 centralID);                    // LAN_X_GET_VERSION response
+    void xbus_BcTrackPower(bool off);                                       // LAN_X_BC_TRACK_POWER_OFF and LAN_X_BC_TRACK_POWER_ON responses
+    void xbus_BcProgrammingMode();                                          // LAN_X_BC_PROGRAMMING_MODE response
+    void xbus_BcTrackShortCircuit();                                        // LAN_X_BC_TRACK_SHORT_CIRCUIT response
+    void xbus_BcStopped();                                                  // LAN_X_BC_STOPPED response
+    void xbus_UnknownCommand();                                             // LAN_X_UNKNOWN_COMMAND response
+    void xbus_StatusChanged(const Z21CentralState& state);                  // LAN_X_STATUS_CHANGED response
+    void xbus_FirmwareVersion(quint8 msb, quint8 lsb, const QString& fv);   // LAN_X_GET_FIRMWARE_VERSION response
+    void xbus_LocoInfo(const Z21LocoInfo& locoInfo);                        // LAN_X_LOCO_INFO response
 
 // LocoNet
 public:
